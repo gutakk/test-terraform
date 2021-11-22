@@ -5,8 +5,8 @@ provider "aws" {
 terraform {
   backend "s3" {
     region  = "ap-southeast-1"
-    bucket  = "gut-test-terraform-state"
-    key     = "cx-web-staging/state.tfstate"
+    bucket  = "gut-test-terraform-state-2"
+    key     = "test-terraform-staging/state.tfstate"
     encrypt = true
   }
 
