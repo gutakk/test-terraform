@@ -44,8 +44,22 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_ssm_policy" {
   policy_arn = aws_iam_policy.ecs_task_execution_ssm.arn
 }
 
+resource "aws_ecs_capacity_provider" "cp" {
+  name = "${var.namespace}-capacity-provider"
+  auto_scaling_group_provider {
+    auto_scaling_group_arn         = var.asg_arn
+    managed_termination_protection = "ENABLED"
+
+    managed_scaling {
+      status          = "ENABLED"
+      target_capacity = 85
+    }
+  }
+}
+
 resource "aws_ecs_cluster" "main" {
-  name = "${var.namespace}-ecs-cluster"
+  name               = "${var.namespace}-ecs-cluster"
+  capacity_providers = [aws_ecs_capacity_provider.cp.name]
 
   tags = {
     Owner = var.owner

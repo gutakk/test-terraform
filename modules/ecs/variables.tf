@@ -25,3 +25,7 @@ variable "desired_count" {
 variable "owner" {
   type = string
 }
+
+variable "asg_arn" {
+  type = string
+}
